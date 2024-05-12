@@ -25,6 +25,19 @@ bash
 Copy code
 git clone 
 Import the database schema located in the database directory into your MySQL.
+##################### data_base-------- shop_db----------------#############
+ _____________Tables_________________
+# products attributes id , name , , author ,genre , description, price , pieces , image
+
+# cart attributes id , user_id , name , price , quantity , image
+
+# views attributes id , view ,product_id , user_id
+
+# message attributes id , user_id , name , email , number , message
+
+# orders attributes id , user_id , name , number , email , method , address , total_products , total_price , placed_on,payment_status
+
+# users attribute id , name , email , password , user_type
 
 Configure the database connection parameters in the config.php file.
 
