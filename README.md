@@ -25,8 +25,11 @@ bash
 Copy code
 git clone 
 Import the database schema located in the database directory into your MySQL.
-#data_base-------- shop_db----------
+
+data_base-------- shop_db----------
+
  _____________Tables_________________
+ 
  products attributes id , name , , author ,genre , description, price , pieces , image
 
  cart attributes id , user_id , name , price , quantity , image
