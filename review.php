@@ -88,7 +88,7 @@ if (isset($_POST['add_to_cart'])) {
               <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
               <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
               <p style="color: green;">add your review here 👇</p>
-              <textarea style="border: 2px solid black ; border-radius: 5px;" name="review" rows="4" cols="30"></textarea><br><br>
+              <textarea style="border: 2px solid black ; border-radius: 5px;" name="review" rows="4" cols="30" required></textarea><br><br>
 
               <input type="submit" name="add_to_cart" value=" click to Add Review" style="border-radius: 5px; background-color:#17a2b8">
               <br>
