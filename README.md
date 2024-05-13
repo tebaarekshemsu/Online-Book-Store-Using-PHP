@@ -36,9 +36,15 @@ Welcome to the Online Book Store Website! This website provides a platform for u
                 - `message`: id, user_id, name, email, number, message
                 - `orders`: id, user_id, name, number, email, method, address, total_products, total_price, placed_on, payment_status
                 - `users`: id, name, email, password, user_type
-3. Configure the database connection parameters in the `config.php` file.
-4. Set up a web server (e.g., Apache) and configure it to serve the website files.
-5. Access the website through your web browser and start using the Online Book Store!
+3. Add config.php file inside the root folder
+4. Configure the database connection parameters in the `config.php` file by adding the following
+    ```bash
+    <?php
+    $conn = mysqli_connect('localhost','username','password','shop_db') or die('connection failed');
+    ```
+   Make sure to put your correct parameter for usename and password of mysql server
+5. Set up a web server (e.g., Apache) and configure it to serve the website files.
+6. Access the website through your web browser and start using the Online Book Store!
 
 ## Contributing
 Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or create a pull request.
