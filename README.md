@@ -5,6 +5,7 @@ Welcome to the Online Book Store Website! This website provides a platform for u
 ## Features
 - **User Registration:** Users can create new accounts by providing necessary details such as username, email, and password.
 - **Email Verification:** Upon registration, users receive a verification email to confirm their email address.
+- **Forgot Password:** If the user forgit their password password will send to their email.
 - **Login:** Users and admins can log in to their accounts securely using their credentials.
 - **User Roles:** The website distinguishes between regular users and admins. Admins have access to additional functionalities such as managing the book inventory.
 - **Admin Dashboard:** Admins have a dedicated dashboard where they can add new books to the inventory.
