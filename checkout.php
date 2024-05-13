@@ -1,5 +1,4 @@
 <?php
-
 include 'config.php';
 
 session_start();
@@ -12,8 +11,15 @@ if (!isset($user_id)) {
    header('location:login.php');
 }
 
-if (isset($_POST['order_btn'])) {
+$message = '';
 
+if (isset($_POST['order_btn'])) {
+   // Get the submitted latitude and longitude
+   $latitude = mysqli_real_escape_string($conn, $_POST['latitude']);
+   $longitude = mysqli_real_escape_string($conn, $_POST['longitude']);
+
+   // Other form submission handling logic goes here
+   // For example, you can insert the order details into the database
    $name = mysqli_real_escape_string($conn, $user_name);
    $number = mysqli_real_escape_string($conn, $_POST['number']);
    $email = mysqli_real_escape_string($conn, $user_email);
@@ -36,38 +42,34 @@ if (isset($_POST['order_btn'])) {
    $order_query = mysqli_query($conn, "SELECT * FROM `orders` WHERE name = '$name' AND number = '$number' AND email = '$email' AND method = '$method' AND address = '$address' AND total_products = '$total_products' AND total_price = '$cart_total'") or die('query failed');
 
    if ($cart_total == 0) {
-      $message[] = 'your cart is empty';
+      $message = 'Your cart is empty';
    } else {
       if (mysqli_num_rows($order_query) > 0) {
-         $message[] = 'order already placed!';
+         $message = 'Order already placed!';
       } else {
-         mysqli_query($conn, "INSERT INTO `orders`(user_id, name, number, email, method, address, total_products, total_price) VALUES('$user_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total')") or die('query failed');
-         $message[] = 'order placed successfully!';
+         mysqli_query($conn, "INSERT INTO `orders`(user_id, name, number, email, method, address, total_products, total_price,payment_status, latitude, longitude) VALUES('$user_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', 'pending', '$latitude', '$longitude')") or die('query failed');
+         $message = 'Order placed successfully!';
          mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
          header('location: shop.php');
+         exit;
       }
    }
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>checkout</title>
-
-   <!-- font awesome cdn link  -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-   <!-- custom css file link  -->
+   <title>Checkout</title>
+   <!-- Add Leaflet CSS -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+   <!-- Custom CSS -->
    <link rel="stylesheet" href="css/style.css">
    <link rel="stylesheet" href="css/styles.css">
    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-
 </head>
 
 <body>
@@ -76,68 +78,96 @@ if (isset($_POST['order_btn'])) {
 
    <div class="headingcheckout">
       <h3>Checkout</h3>
-      <p> <a href="home.php">Home</a> / Checkout </p>
+      <p><a href="home.php">Home</a> / Checkout </p>
    </div>
 
-   <section class="display-order">
-
-      <?php
-      $grand_total = 0;
-      $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
-      if (mysqli_num_rows($select_cart) > 0) {
-         while ($fetch_cart = mysqli_fetch_assoc($select_cart)) {
-            $total_price = ($fetch_cart['price'] * $fetch_cart['quantity']);
-            $grand_total += $total_price;
-      ?>
-            <p> <?php echo $fetch_cart['name']; ?> <span>(<?php echo '$' . $fetch_cart['price'] . '/-' . ' x ' . $fetch_cart['quantity']; ?>)</span> </p>
-      <?php
-         }
-      } else {
-         echo '<p class="empty">your cart is empty</p>';
-      }
-      ?>
-      <div class="grand-total"> Grand Total : <span>$ <?php echo $grand_total; ?>/-</span> </div>
-
-   </section>
-
    <section class="checkout">
-
       <form action="" method="post">
          <h3>Place Your Order</h3>
-         <div class="flex">
-            <input type="hidden" name="name" value="<?php echo $user_name; ?>">
-            <input type="hidden" name="email" value="<?php echo $user_email; ?>">
-            <div class="inputBox">
-               <span>Your Number :</span>
-               <input type="text" name="number" required placeholder="Enter Your Number">
-            </div>
-            <div class="inputBox">
-               <span>Payment Method :</span>
-               <select name="method">
-                  <option value="cash on delivery">Cash On Delivery</option>
-                  <option value="credit card">Credit Card</option>
-                  <option value="paypal">Paypal</option>
-                  <option value="paytm">Paytm</option>
-               </select>
-            </div>
-            <div class="inputBox">
-               <span>Address Line 01 :</span>
-               <input type="text" name="street" required placeholder="e.g. Street name">
-            </div>
-            <div class="inputBox">
-               <span>City :</span>
-               <input type="text" name="city" required placeholder="e.g. Paris">
-            </div>
+         <!-- Map Container -->
+         <div id="map" style="height: 400px;"></div>
+         <!-- Latitude and Longitude Input Fields -->
+         <input type="hidden" name="latitude" id="latitude">
+         <input type="hidden" name="longitude" id="longitude">
+         <!-- Other Input Fields -->
+         <div class="inputBox">
+            <span>Your Number :</span>
+            <input type="text" name="number" required placeholder="Enter Your Number">
          </div>
-         <input type="submit" value="order now" class="btne" name="order_btn">
+         <div class="inputBox">
+            <span>Payment Method :</span>
+            <select name="method">
+               <option value="cash on delivery">Cash On Delivery</option>
+               <option value="credit card">Credit Card</option>
+               <option value="paypal">Paypal</option>
+               <option value="paytm">Paytm</option>
+            </select>
+         </div>
+         <div class="inputBox">
+            <span>Street Address :</span>
+            <input type="text" name="street" required placeholder="e.g. Street name">
+         </div>
+         <div class="inputBox">
+            <span>City :</span>
+            <input type="text" name="city" required placeholder="e.g. Paris">
+         </div>
+         <!-- Submit Button -->
+         <input type="submit" value="Order Now" class="btne" name="order_btn">
       </form>
-
+      <!-- Display Message -->
+      <?php if (!empty($message)) : ?>
+         <p><?php echo $message; ?></p>
+      <?php endif; ?>
    </section>
 
    <?php include 'footer.php'; ?>
 
-   <!-- custom js file link  -->
-   <script src="js/script.js"></script>
+   <!-- Add Leaflet JavaScript -->
+   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+   <script>
+      // Initialize the map
+      var map = L.map('map').setView([0, 0], 13); // Default to (0, 0) with zoom level 13
+
+      // Declare marker variable
+      var chosenLocationMarker;
+
+      // Try to get user's current location
+      if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            // Set map center to user's current location initially
+            map.setView([lat, lng], 13);
+            // Add marker at user's current location
+            chosenLocationMarker = L.marker([lat, lng]).addTo(map);
+            // Set the latitude and longitude input fields
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+         }, function(error) {
+            console.error('Error getting current location:', error);
+         });
+      } else {
+         console.error('Geolocation is not supported by this browser.');
+      }
+
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      // Add event listener for map click
+      map.on('click', function(e) {
+         // Remove existing chosen location marker
+         if (chosenLocationMarker) {
+            map.removeLayer(chosenLocationMarker);
+         }
+         // Add marker at clicked location
+         chosenLocationMarker = L.marker(e.latlng).addTo(map);
+         // Update latitude and longitude input fields
+         document.getElementById('latitude').value = e.latlng.lat;
+         document.getElementById('longitude').value = e.latlng.lng;
+      });
+   </script>
 
 </body>
 
