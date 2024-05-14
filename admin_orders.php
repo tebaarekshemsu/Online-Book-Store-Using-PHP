@@ -43,9 +43,24 @@ if (isset($_GET['delete'])) {
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+        .orders {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-height: 80vh; /* Set maximum height */
+            overflow-y: auto; /* Allow vertical overflow */
+        }
+
+        .box-container {
+            flex: 1 1 300px; /* Flex properties for each box */
+        }
+
+        .box {
+            /* Your existing styles */
+        }
+
         .map-container {
-            height: 400px;
-            margin-bottom: 20px;
+            height: 200px; /* Adjust map height as needed */
         }
     </style>
 </head>
@@ -63,15 +78,14 @@ if (isset($_GET['delete'])) {
         $select_orders = mysqli_query($conn, "SELECT * FROM `orders`") or die('query failed');
         if (mysqli_num_rows($select_orders) > 0) {
             while ($fetch_orders = mysqli_fetch_assoc($select_orders)) {
-                ?>
-                <div>
-                    <h2>Order ID: <?php echo $fetch_orders['id']; ?></h2>
-                    <div id="map_<?php echo $fetch_orders['id']; ?>"></div>
-                    <!-- Deliver Order Button -->
-                </div>
+        ?>
                 <div class="box-container">
                     <div class="box">
-                    <div id="map_<?php echo $fetch_orders['id']; ?>"></div>
+                        <div>
+                            <h2>Order ID: <?php echo $fetch_orders['id']; ?></h2>
+                            <div id="map_<?php echo $fetch_orders['id']; ?>" class="map-container"></div>
+                            <!-- Deliver Order Button -->
+                        </div>
                         <p> User ID: <span><?php echo $fetch_orders['user_id']; ?></span> </p>
                         <p> Placed on: <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
                         <p> Name: <span><?php echo $fetch_orders['name']; ?></span> </p>
@@ -89,18 +103,17 @@ if (isset($_GET['delete'])) {
                                 <option value="completed">Completed</option>
                             </select>
                             <input type="submit" value="Update" name="update_order" class="option-btn">
-                            <a href="admin_orders.php?delete=<?php echo $fetch_orders['id']; ?>"
-                                onclick="return confirm('Delete this order?');" class="delete-btn">Delete</a>
+                            <a href="admin_orders.php?delete=<?php echo $fetch_orders['id']; ?>" onclick="return confirm('Delete this order?');" class="delete-btn">Delete</a>
                         </form>
                         <button><a href="live_map.php?lat=<?php echo $fetch_orders['latitude']; ?>&lng=<?php echo $fetch_orders['longitude']; ?>" class="deliver-btn">Deliver Order</a></button>
                     </div>
                 </div>
-            <?php
+        <?php
+            }
+        } else {
+            echo '<p class="empty">No Orders Yet!</p>';
         }
-    } else {
-        echo '<p class="empty">No Orders Yet!</p>';
-    }
-    ?>
+        ?>
 
     </section>
 
@@ -112,7 +125,7 @@ if (isset($_GET['delete'])) {
         $select_orders = mysqli_query($conn, "SELECT * FROM `orders`") or die('query failed');
         if (mysqli_num_rows($select_orders) > 0) {
             while ($fetch_orders = mysqli_fetch_assoc($select_orders)) {
-                ?>
+        ?>
                 var map_<?php echo $fetch_orders['id']; ?> = L.map('map_<?php echo $fetch_orders['id']; ?>').setView([<?php echo $fetch_orders['latitude']; ?>, <?php echo $fetch_orders['longitude']; ?>], 13);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -120,10 +133,10 @@ if (isset($_GET['delete'])) {
                 L.marker([<?php echo $fetch_orders['latitude']; ?>, <?php echo $fetch_orders['longitude']; ?>]).addTo(map_<?php echo $fetch_orders['id']; ?>)
                     .bindPopup('Order ID: <?php echo $fetch_orders['id']; ?>')
                     .openPopup();
-            <?php
+        <?php
+            }
         }
-    }
-    ?>
+        ?>
     </script>
 
 </body>
