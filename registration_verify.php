@@ -41,6 +41,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+      body {
+         background-image: url('./images/background_3.jpg'); 
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-attachment: fixed;
+      }
+   </style>
 </head>
 <body>
   <div class="wrapper">

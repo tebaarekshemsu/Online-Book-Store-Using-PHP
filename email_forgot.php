@@ -69,7 +69,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+      body {
+         background-image: url('./images/background_3.jpg'); 
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-attachment: fixed;
+      }
+   </style>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
