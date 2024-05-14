@@ -98,10 +98,10 @@ if (isset($_POST['update_product'])) {
          ?>
                <div class="box">
                   <img class="image" src="<?php echo $fetch_products['image']; ?>" alt="">
-                  <div class="name"><?php echo $fetch_products['name']; ?></div>
-                  <div class="author"><?php echo $fetch_products['author']; ?></div>
-                  <div class="genre"><?php echo $fetch_products['genre']; ?></div>
-                  <div class="description"><?php echo $fetch_products['description']; ?></div>
+                  <h1 class="name" style="font-family: Arial, sans-serif;"><strong>Name:</strong> <span style="font-weight: lighter;"><?php echo $fetch_products['name']; ?></span></h1>
+                  <h2 class="genre" style="font-family: Arial, sans-serif;"><strong>Genre:</strong> <span style="font-weight: lighter;"><?php echo $fetch_products['genre']; ?></span></h2>
+                  <h3 class="author" style="font-family: Arial, sans-serif;"><strong>Author:</strong> <span style="font-weight: lighter;"><?php echo $fetch_products['author']; ?></span></h3>
+                  <h4 class="description" style="font-family: Arial, sans-serif; font-weight: lighter;"><strong>Description:</strong> <span style="font-weight: lighter;"><?php echo $fetch_products['description']; ?></span></h4>
                   <div class="price">$<?php echo $fetch_products['price']; ?>/-</div>
                   <div class="pieces">Available Pieces: <?php echo $fetch_products['pieces']; ?></div>
                   <a href="admin_products.php?update=<?php echo $fetch_products['id']; ?>" class="update-btn">Update</a>
