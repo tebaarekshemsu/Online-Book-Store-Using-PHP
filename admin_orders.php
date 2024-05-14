@@ -64,14 +64,14 @@ if (isset($_GET['delete'])) {
         if (mysqli_num_rows($select_orders) > 0) {
             while ($fetch_orders = mysqli_fetch_assoc($select_orders)) {
                 ?>
-                <div class="map-container">
+                <div>
                     <h2>Order ID: <?php echo $fetch_orders['id']; ?></h2>
                     <div id="map_<?php echo $fetch_orders['id']; ?>"></div>
                     <!-- Deliver Order Button -->
-                    <a href="live_map.php?lat=<?php echo $fetch_orders['latitude']; ?>&lng=<?php echo $fetch_orders['longitude']; ?>" class="deliver-btn">Deliver Order</a>
                 </div>
                 <div class="box-container">
                     <div class="box">
+                    <div id="map_<?php echo $fetch_orders['id']; ?>"></div>
                         <p> User ID: <span><?php echo $fetch_orders['user_id']; ?></span> </p>
                         <p> Placed on: <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
                         <p> Name: <span><?php echo $fetch_orders['name']; ?></span> </p>
@@ -92,6 +92,7 @@ if (isset($_GET['delete'])) {
                             <a href="admin_orders.php?delete=<?php echo $fetch_orders['id']; ?>"
                                 onclick="return confirm('Delete this order?');" class="delete-btn">Delete</a>
                         </form>
+                        <button><a href="live_map.php?lat=<?php echo $fetch_orders['latitude']; ?>&lng=<?php echo $fetch_orders['longitude']; ?>" class="deliver-btn">Deliver Order</a></button>
                     </div>
                 </div>
             <?php

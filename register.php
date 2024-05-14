@@ -43,6 +43,7 @@ function generateVerificationCode($length = 6)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $name = mysqli_real_escape_string($conn, $_POST['name']);
    $email = mysqli_real_escape_string($conn, $_POST['email']);
+   $photo =  mysqli_real_escape_string($conn, $_POST['photo']);
    $pass = mysqli_real_escape_string($conn, md5($_POST['password']));
    $cpass = mysqli_real_escape_string($conn, md5($_POST['cpassword']));
    $user_type = $_POST['user_type'];
@@ -62,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $_SESSION['verification_code'] = $verificationCode;
    $_SESSION['name'] = $name;
    $_SESSION['email'] = $email;
+   $_SESSION['photo'] = $photo;
    $_SESSION['password'] = $pass;
    $_SESSION['user_type'] = $user_type;
    $_SESSION['admin_password'] = $admin_password;
@@ -106,6 +108,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="input-box">
                <input class="input-text" type="email" name="email">
                <label for="input-text">Email</label>
+               <i class='bx bxs-envelope'></i>
+            </div>
+            <div class="input-box">
+               <input class="input-text" type="text" name="photo">
+               <label for="input-text">Upload Photo URL</label>
                <i class='bx bxs-envelope'></i>
             </div>
             <div class="input-box">

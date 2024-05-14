@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $verificationCode = $_POST['verification_code'];
   $name = $_SESSION['name'];
   $email = $_SESSION['email'];
+  $_SESSION['photo'] = $photo;
   $password = $_SESSION['password'];
   $user_type = $_SESSION['user_type'];
   $admin_password = $_SESSION['admin_password'];
@@ -14,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Check if verification code matches
   if ($verificationCode === $_SESSION['verification_code']) {
     // Insert user into database
-    $sql = "INSERT INTO users (name, email, password, user_type) VALUES ('$name', '$email', '$password', '$user_type')";
+    $sql = "INSERT INTO users (name, email, ,photo ,password, user_type) VALUES ('$name', '$email', $photo, '$password', '$user_type')";
     if ($conn->query($sql) === TRUE) {
       echo "User registered successfully";
       // Redirect user to login page or any other page as needed
@@ -42,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
   <div class="wrapper">
     <span class="icon-close"><i class='bx bx-x'></i></span>
@@ -60,4 +62,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>
 </body>
+
 </html>
