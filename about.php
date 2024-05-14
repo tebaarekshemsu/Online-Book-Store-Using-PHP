@@ -29,6 +29,11 @@ if (!isset($user_id)) {
    <link rel="stylesheet" href="css/style.css">
    <link rel="stylesheet" href="css/styles.css">
    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+   <style>
+      .message{
+         padding-left: 25%;
+      }
+   </style>
 
 </head>
 
@@ -95,57 +100,12 @@ if (!isset($user_id)) {
             <h3>Emily Scarlett</h3>
          </div>
 
-         <div class="box">
-            <img src="images/banner22.jpg" alt="">
-            <p>Dystopia is not a new genre in literature and cinematography. Dystopian worlds have been described in the novels of such writers as Herbert Wells</p>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-            </div>
-            <h3>Daniel Jacob</h3>
-         </div>
 
-         <div class="box">
-            <img src="images/banner21.jpg" alt="">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt ad, quo labore fugiat nam accusamus quia. Ducimus repudiandae dolore placeat.</p>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-            </div>
-            <h3>Amelia Charlotte</h3>
-         </div>
+         
 
-         <div class="box">
-            <img src="images/banner23.jpg" alt="">
-            <p>By Matt Trueman Pity those parents with inquisitive kids, for they shall be faced with a barrage of whys after the Royal Court’s first ever in the best …</p>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-            </div>
-            <h3>James William</h3>
-         </div>
+         
 
-         <div class="box">
-            <img src="images/pic-2.png" alt="">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt ad, quo labore fugiat nam accusamus quia. Ducimus repudiandae dolore placeat.</p>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-            </div>
-            <h3>Oscar Nel</h3>
-         </div>
+         
 
       </div>
 
@@ -153,83 +113,22 @@ if (!isset($user_id)) {
 
    <!-- review section ends -->
 
-   <section class="authors">
+<div class="message">
+   <form action="" method="post">
+      
+      <p style="color: #f19256;">add your review here 👇</p>
+      <textarea style="border: 2px solid black; border-radius: 5px;" name="message" rows="7" cols="70" required></textarea>
+      <br>
+      rate:
+      <input type="number" value="rate" min="0" max="5" required style="background-color: #f19256;">
+      
+      <br><br>
 
-      <h1 class="title">greate authors</h1>
-
-      <div class="box-container">
-
-         <div class="box">
-            <img src="images/author3.jpg" alt="">
-            <div class="share">
-               <a href="#" class="fab fa-facebook-f"></a>
-               <a href="#" class="fab fa-twitter"></a>
-               <a href="#" class="fab fa-instagram"></a>
-               <a href="#" class="fab fa-linkedin"></a>
-            </div>
-            <h3>Arthur Conan Doyle</h3>
-         </div>
-
-         <div class="box">
-            <img src="images/author2.jpg" alt="">
-            <div class="share">
-               <a href="#" class="fab fa-facebook-f"></a>
-               <a href="#" class="fab fa-twitter"></a>
-               <a href="#" class="fab fa-instagram"></a>
-               <a href="#" class="fab fa-linkedin"></a>
-            </div>
-            <h3>J. K. Rowling</h3>
-         </div>
-
-         <div class="box">
-            <img src="images/author4.jpg" alt="">
-            <div class="share">
-               <a href="#" class="fab fa-facebook-f"></a>
-               <a href="#" class="fab fa-twitter"></a>
-               <a href="#" class="fab fa-instagram"></a>
-               <a href="#" class="fab fa-linkedin"></a>
-            </div>
-            <h3>George R. R. Martin</h3>
-         </div>
-
-         <div class="box">
-            <img src="images/author5.jpg" alt="">
-            <div class="share">
-               <a href="#" class="fab fa-facebook-f"></a>
-               <a href="#" class="fab fa-twitter"></a>
-               <a href="#" class="fab fa-instagram"></a>
-               <a href="#" class="fab fa-linkedin"></a>
-            </div>
-            <h3>J. R. R. Tolkien</h3>
-         </div>
-
-         <div class="box">
-            <img src="images/author6.jpg" alt="">
-            <div class="share">
-               <a href="#" class="fab fa-facebook-f"></a>
-               <a href="#" class="fab fa-twitter"></a>
-               <a href="#" class="fab fa-instagram"></a>
-               <a href="#" class="fab fa-linkedin"></a>
-            </div>
-            <h3>Jennifer Egan</h3>
-         </div>
-
-         <div class="box">
-            <img src="images/author7.jpg" alt="">
-            <div class="share">
-               <a href="#" class="fab fa-facebook-f"></a>
-               <a href="#" class="fab fa-twitter"></a>
-               <a href="#" class="fab fa-instagram"></a>
-               <a href="#" class="fab fa-linkedin"></a>
-            </div>
-            <h3>Louise Erdrich</h3>
-         </div>
-
-      </div>
-
-   </section>
-
-
+      <input type="submit" name="add_to_cart" value=" click to send" style="border-radius: 5px; background-color: #f19256;">
+      <br>
+      
+   </form>
+   </div>
    <?php include 'footer.php'; ?>
 
    <!-- custom js file link  -->

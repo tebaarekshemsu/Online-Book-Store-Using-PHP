@@ -22,7 +22,7 @@ function send_mail($recipient, $subject, $message)
     $mail->Port = 587;
     $mail->Username = 'tamedemse83@gmail.com';
     $mail->Password = 'ebgo oevx esdj tffo';
-    $mail->setFrom('your-email@gmail.com', 'Your Sender Name');
+    $mail->setFrom('your-email@gmail.com', 'Online Book Store');
     $mail->addAddress($recipient);
     $mail->isHTML(true);
     $mail->Subject = $subject;
@@ -69,7 +69,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+      body {
+         background-image: url('./images/background_3.jpg'); 
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-attachment: fixed;
+      }
+   </style>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">

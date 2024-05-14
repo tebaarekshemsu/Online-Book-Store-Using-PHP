@@ -49,6 +49,15 @@ if (isset($_POST['submit'])) {
    <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
    <link rel="stylesheet" href="css/styles.css">
+
+   <style>
+      body {
+         background-image: url('./images/background_3.jpg'); 
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-attachment: fixed;
+      }
+   </style>
    
 </head>
 
