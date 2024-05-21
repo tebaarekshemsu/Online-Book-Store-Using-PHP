@@ -1,5 +1,4 @@
 <?php
-
 include 'config.php';
 session_start();
 
@@ -14,14 +13,20 @@ if (isset($_POST['submit'])) {
 
       $row = mysqli_fetch_assoc($select_users);
 
-      if ($row['user_type'] == 'admin') {
+      if (isset($_POST['remember_me'])) {
+         setcookie('email', $email, time() + (86400 * 30), "/"); // 30 days
+         setcookie('password', $_POST['password'], time() + (86400 * 30), "/"); // 30 days
+      } else {
+         setcookie('email', '', time() - 3600, "/");
+         setcookie('password', '', time() - 3600, "/");
+      }
 
+      if ($row['user_type'] == 'admin') {
          $_SESSION['admin_name'] = $row['name'];
          $_SESSION['admin_email'] = $row['email'];
          $_SESSION['admin_id'] = $row['id'];
          header('location:admin_page.php');
       } elseif ($row['user_type'] == 'user') {
-
          $_SESSION['user_name'] = $row['name'];
          $_SESSION['user_email'] = $row['email'];
          $_SESSION['user_id'] = $row['id'];
@@ -31,11 +36,15 @@ if (isset($_POST['submit'])) {
       $message[] = 'incorrect email or password!';
    }
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+   <style>
+      .form-box{
+         background-color: antiquewhite;
+      }
+   </style>
 
 <head>
    <meta charset="UTF-8">
@@ -52,7 +61,7 @@ if (isset($_POST['submit'])) {
 
    <style>
       body {
-         background-image: url('./images/background_3.jpg'); 
+         background-image: url('./images/new\ back.jpg'); 
          background-size: cover;
          background-repeat: no-repeat;
          background-attachment: fixed;
@@ -81,35 +90,27 @@ if (isset($_POST['submit'])) {
          <form action="" method="post" class="form-box">
             <h2>Login</h2>
             <div class="input-box">
-               <input class="input-text" type="email" name="email">
+               <input class="input-text" type="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; } ?>">
                <label for="input-text">Email</label>
                <i class='bx bxs-envelope'></i>
             </div>
             <div class="input-box">
-               <input class="input-text" type="password"  name="password">
+               <input class="input-text" type="password" name="password" value="<?php if(isset($_COOKIE['password'])) { echo $_COOKIE['password']; } ?>">
                <label for="input-text">password</label>
                <i class='bx bxs-lock-alt'></i>
             </div>
-            <div class="remeber-forgot">
-               <label for="remeber-me"><input type="checkbox">
-                  Remeber me</label>
-               <a href="email_forgot.php">Forgot password?</a>
+            <div class="remember-forgot">
+               <label for="remember-me"><input type="checkbox" name="remember_me" <?php if(isset($_COOKIE['email'])) { echo 'checked'; } ?>> Remember me</label>
+               <a href="email_forgot.php" style="color: orange; margin-left: 10px;"> Forgot password</a>
+
             </div>
             <div class="reg">
-            <input type="submit" name="submit" value="login now" class="btn">
+               <input type="submit" name="submit" value="login now" class="btn">
             </div>
             <div class="login-register">
                <p>Don't have an account ?<a href="register.php" class="register-link">Register</a></p>
             </div>
          </form>
-         <!-- <form action="" method="post">
-            <h3>Login</h3>
-            <input type="email" name="email" placeholder="enter your email" required class="box">
-            <input type="password" name="password" placeholder="enter your password" required class="box">
-            <input type="submit" name="submit" value="login now" class="btn">
-            <p>don't have an account? <a href="register.php">register now</a></p>
-         </form> -->
-
       </div>
    </div>
 </body>

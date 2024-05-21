@@ -76,6 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
          background-repeat: no-repeat;
          background-attachment: fixed;
       }
+      .form-box{
+         background-color: antiquewhite;
+      }
    </style>
 <head>
   <meta charset="UTF-8">

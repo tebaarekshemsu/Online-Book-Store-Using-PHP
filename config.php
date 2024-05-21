@@ -87,7 +87,10 @@ function createTables($conn)
         total_products INT,
         total_price DECIMAL(10,2),
         placed_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        payment_status VARCHAR(255)
+        payment_status VARCHAR(255),
+        latitude FLOAT(10, 6),
+        longitude FLOAT(10, 6)
+
     )";
   if ($conn->query($sql_orders) === !TRUE) {
     echo "Error creating table 'orders': " . $conn->error;
@@ -99,11 +102,24 @@ function createTables($conn)
         name VARCHAR(255),
         email VARCHAR(255),
         password VARCHAR(255),
-        user_type VARCHAR(255)
+        user_type VARCHAR(255),
+        photo VARCHAR(500)
     )";
   if ($conn->query($sql_users) === !TRUE) {
     echo "Error creating table 'users': " . $conn->error;
   }
+
+  //create 'feedbacks' table
+  $sql_feedbacks="CREATE TABLE IF NOT EXISTS feedbacks(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+    )";
+    if ($conn->query($sql_feedbacks) === !TRUE) {
+      echo "Error creating table 'feedbacks': " . $conn->error;
+    }
 }
 
 // Database connection parameters
