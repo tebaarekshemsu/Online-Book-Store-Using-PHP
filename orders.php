@@ -10,9 +10,37 @@ if (!isset($user_id)) {
    header('location:login.php');
 }
 
+// Function to fetch address from Nominatim API
+function getAddressFromCoordinates($latitude, $longitude) {
+    // Construct API URL
+    $apiUrl = "https://nominatim.openstreetmap.org/reverse?format=json&lat=$latitude&lon=$longitude&zoom=18&addressdetails=1";
+
+    // Initialize cURL session
+    $ch = curl_init();
+
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_URL, $apiUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Your-App-Name');
+
+    // Execute cURL session
+    $jsonResponse = curl_exec($ch);
+
+    // Close cURL session
+    curl_close($ch);
+
+    // Decode JSON response
+    $data = json_decode($jsonResponse, true);
+
+    // Check if 'display_name' field exists in the response
+    if (isset($data['display_name'])) {
+        return $data['display_name']; // Return the address
+    } else {
+        return 'Address not found'; // Return a default message if address not found
+    }
+}
+
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,13 +80,17 @@ if (!isset($user_id)) {
          $order_query = mysqli_query($conn, "SELECT * FROM orders WHERE user_id = '$user_id'") or die('query failed');
          if (mysqli_num_rows($order_query) > 0) {
             while ($fetch_orders = mysqli_fetch_assoc($order_query)) {
+                // Fetch address using latitude and longitude
+                $latitude = $fetch_orders['latitude'];
+                $longitude = $fetch_orders['longitude'];
+                $address = getAddressFromCoordinates($latitude, $longitude);
          ?>
                <div class="box">
                   <p> placed on : <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
                   <p> name : <span><?php echo $fetch_orders['name']; ?></span> </p>
                   <p> number : <span><?php echo $fetch_orders['number']; ?></span> </p>
                   <p> email : <span><?php echo $fetch_orders['email']; ?></span> </p>
-                  <p> address : <span><?php echo $fetch_orders['address']; ?></span> </p>
+                  <p> address : <span><?php echo $address; ?></span> </p> <!-- Display fetched address -->
                   <p> payment method : <span><?php echo $fetch_orders['method']; ?></span> </p>
                   <p> your orders : <span><?php echo $fetch_orders['total_products']; ?></span> </p>
                   <p> total price : <span>$<?php echo $fetch_orders['total_price']; ?>/-</span> </p>
