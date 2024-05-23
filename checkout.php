@@ -1,4 +1,3 @@
-Tamrat, [5/14/2024 12:48 PM]
 <?php
 include 'config.php';
 
@@ -81,7 +80,6 @@ if (isset($_POST['order_btn'])) {
       <p><a href="home.php">Home</a> / Checkout </p>
    </div>
 
-Tamrat, [5/14/2024 12:48 PM]
 <section class="checkout">
       <form method="post" action="">
          <div class="inputBox">
