@@ -84,7 +84,7 @@ function createTables($conn)
         email VARCHAR(255),
         method VARCHAR(255),
         address VARCHAR(255),
-        total_products INT,
+        total_products VARCHAR(255),
         total_price DECIMAL(10,2),
         placed_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         payment_status VARCHAR(255),
