@@ -23,7 +23,7 @@ function send_mail($recipient, $subject, $message)
       $mail->Port = 587;
       $mail->Username = 'tamedemse83@gmail.com';
       $mail->Password = 'ebgo oevx esdj tffo';
-      $mail->setFrom('your-email@gmail.com', 'Online Book Store');
+      $mail->setFrom('bookstore', 'Online Book Store');
       $mail->addAddress($recipient);
       $mail->isHTML(true);
       $mail->Subject = $subject;

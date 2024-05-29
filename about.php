@@ -1,41 +1,46 @@
 <?php
-include 'config.php';
+require_once 'config.php';
 session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
 
 $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['user_name'];
 
-if (!isset($user_id)) {
-   header('location:login.php');
-   exit(); // Stop further execution
-}
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
-    $message = $_POST['message'];
-    $rating = $_POST['rating'];
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit_review'])) {
+    $message = trim($_POST['message']);
+    $rating = (int)$_POST['rating'];
 
     // Prepare SQL statement
-    $sql = "INSERT INTO feedbacks ( message, rating) VALUES ( ?, ?)";
+    $sql = "INSERT INTO feedbacks (message, rating, user_id) VALUES (?, ?, ?)";
 
-    // Prepare and bind parameters
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "si",  $message, $rating);
+    if ($stmt = mysqli_prepare($conn, $sql)) {
+        // Bind parameters
+        mysqli_stmt_bind_param($stmt, "sii", $message, $rating, $user_id);
 
-    // Execute the statement
-    if (mysqli_stmt_execute($stmt)) {
-        echo "Feedback submitted successfully.";
+        // Execute the statement
+        if (mysqli_stmt_execute($stmt)) {
+            echo "Feedback submitted successfully.";
+        } else {
+            echo "Error: " . mysqli_error($conn);
+        }
+
+        // Close statement
+        mysqli_stmt_close($stmt);
     } else {
-        echo "Error: " . mysqli_error($conn);
+        echo "Error preparing statement: " . mysqli_error($conn);
     }
-
-    // Close statement and connection
-    mysqli_stmt_close($stmt);
 }
 
-
-
-
-
+// Fetch reviews from the database
+$reviews_sql = "SELECT feedbacks.message, feedbacks.rating, users.name, users.photo
+                FROM feedbacks
+                JOIN users ON feedbacks.user_id = users.id";
+$reviews_result = mysqli_query($conn, $reviews_sql);
+$reviews = mysqli_fetch_all($reviews_result, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -87,33 +92,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
    <section class="reviews">
       <h1 class="titlelatest">Reviews</h1>
       <div class="box-container">
-         <div class="box">
-            <img src="images/profile1.jpg" alt="">
-            <p>he poem Stolen Rivers is by Phillippa Yaa de Villiers, an award-winning South African poet whose work focuses mainly on race, sexuality, class, and gender…</p>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-            </div>
-            <h3>Liam Oliver</h3>
-         </div>
-         <div class="box">
-            <img src="images/profile.jpg" alt="">
-            <p>Skeptics like to debate whether humanity’s way of entertainment has changed throughout recent centuries or not. Some claim that it never did, and just as…</p>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-            </div>
-            <h3>Emily Scarlett</h3>
-         </div>
+         <?php if (!empty($reviews)) { ?>
+             <?php foreach ($reviews as $review) { ?>
+                 <div class="box">
+                    <img src="<?php echo htmlspecialchars($review['photo']); ?>" alt="">
+                    <p><?php echo htmlspecialchars($review['message']); ?></p>
+                    <div class="stars">
+                       <?php for ($i = 1; $i <= 5; $i++) {
+                          echo $i <= $review['rating'] ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+                       } ?>
+                    </div>
+                    <h3><?php echo htmlspecialchars($review['name']); ?></h3>
+                 </div>
+             <?php } ?>
+         <?php } else { ?>
+             <p>No reviews available.</p>
+         <?php } ?>
       </div>
    </section>
    <!-- review section ends -->
+
    <div class="message">
       <form action="" method="post">
          <p style="color: #f19256;">Add your review here 👇</p>
@@ -122,10 +120,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
          Rate:
          <input type="number" name="rating" min="0" max="5" required style="background-color: #f19256; border: 2px solid black; border-radius: 5px; padding: 5px;">
          <br><br>
-         <input type="submit" name="add_to_cart" value="Click to send" style="border-radius: 5px; background-color: #f19256;">
+         <input type="submit" name="submit_review" value="Click to send" style="border-radius: 5px; background-color: #f19256;">
          <br>
       </form>
    </div>
+   
    <?php include 'footer.php'; ?>
    
    <script src="js/script.js"></script>
