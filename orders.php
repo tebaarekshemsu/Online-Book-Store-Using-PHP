@@ -85,10 +85,11 @@ function getAddressFromCoordinates($latitude, $longitude) {
                 $longitude = $fetch_orders['longitude'];
                 $address = getAddressFromCoordinates($latitude, $longitude);
          ?>
-               <div class="box">
-                  <p> placed on : <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
+               <div class="box boxi">
+                  
                   <p> name : <span><?php echo $fetch_orders['name']; ?></span> </p>
                   <p> number : <span><?php echo $fetch_orders['number']; ?></span> </p>
+                  <p> placed on : <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
                   <p> email : <span><?php echo $fetch_orders['email']; ?></span> </p>
                   <p> address : <span><?php echo $address; ?></span> </p> <!-- Display fetched address -->
                   <p> payment method : <span><?php echo $fetch_orders['method']; ?></span> </p>
