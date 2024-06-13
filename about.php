@@ -1,6 +1,11 @@
 <?php
-include 'config.php';
+require_once 'config.php';
 session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
 
 $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['user_name'];
@@ -32,10 +37,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
    mysqli_stmt_close($stmt);
 }
 
+// Fetch reviews from the database
+$reviews_sql = "SELECT message, rating, user_id FROM feedbacks";
+$reviews_result = mysqli_query($conn, $reviews_sql);
+$reviews = mysqli_fetch_all($reviews_result, MYSQLI_ASSOC);
 
-
-
-
+// Fetch user details for each review
+foreach ($reviews as $key => $review) {
+    $user_id = $review['user_id'];
+    $user_sql = "SELECT name, photo FROM users WHERE id = ?";
+    
+    if ($stmt = mysqli_prepare($conn, $user_sql)) {
+        mysqli_stmt_bind_param($stmt, "i", $user_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $name, $photo);
+        mysqli_stmt_fetch($stmt);
+        $reviews[$key]['name'] = $name;
+        $reviews[$key]['photo'] = $photo;
+        mysqli_stmt_close($stmt);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
       <p> <a href="home.php">Home</a> / About </p>
    </div>
 
-   <section class="about">
+Tamrat, [6/14/2024 1:58 AM]
+<section class="about">
       <div class="flex">
          <div class="image">
             <img src="images/aboutbook1.jpg" alt="">
@@ -87,33 +109,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
    <section class="reviews">
       <h1 class="titlelatest">Reviews</h1>
       <div class="box-container">
-         <div class="box">
-            <img src="images/profile1.jpg" alt="">
-            <p>he poem Stolen Rivers is by Phillippa Yaa de Villiers, an award-winning South African poet whose work focuses mainly on race, sexuality, class, and gender…</p>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-            </div>
-            <h3>Liam Oliver</h3>
-         </div>
-         <div class="box">
-            <img src="images/profile.jpg" alt="">
-            <p>Skeptics like to debate whether humanity’s way of entertainment has changed throughout recent centuries or not. Some claim that it never did, and just as…</p>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-            </div>
-            <h3>Emily Scarlett</h3>
-         </div>
+         <?php if (!empty($reviews)) { ?>
+             <?php foreach ($reviews as $review) { ?>
+                 <div class="box">
+                    <img src="<?php echo htmlspecialchars($review['photo']); ?>" alt="">
+                    <p><?php echo htmlspecialchars($review['message']); ?></p>
+                    <div class="stars">
+                       <?php for ($i = 1; $i <= 5; $i++) {
+                          echo $i <= $review['rating'] ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+                       } ?>
+                    </div>
+                    <h3><?php echo htmlspecialchars($review['name']); ?></h3>
+                 </div>
+             <?php } ?>
+         <?php } else { ?>
+             <p>No reviews available.</p>
+         <?php } ?>
       </div>
    </section>
    <!-- review section ends -->
+
    <div class="message">
       <form action="" method="post">
          <p style="color: #f19256;">Add your review here 👇</p>
@@ -122,10 +137,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
          Rate:
          <input type="number" name="rating" min="0" max="5" required style="background-color: #f19256; border: 2px solid black; border-radius: 5px; padding: 5px;">
          <br><br>
-         <input type="submit" name="add_to_cart" value="Click to send" style="border-radius: 5px; background-color: #f19256;">
+         <input type="submit" name="submit_review" value="Click to send" style="border-radius: 5px; background-color: #f19256;">
          <br>
       </form>
    </div>
+   
    <?php include 'footer.php'; ?>
 
    <script src="js/script.js"></script>
