@@ -39,6 +39,9 @@ if (isset($_POST['add_to_cart'])) {
    }
 }
 
+$sort_order = isset($_GET['sort']) ? $_GET['sort'] : 'ASC';
+$new_sort_order = $sort_order === 'ASC' ? 'DESC' : 'ASC';
+
 ?>
 
 <!DOCTYPE html>
@@ -73,11 +76,16 @@ if (isset($_POST['add_to_cart'])) {
    <section class="products">
 
       <h1 class="titleProducts">Latest Products</h1>
+      
+      <!-- Sorting button -->
+      <div class="sort-container">
+         <button class="sort-btn"><a href="shop.php?sort=<?php echo $new_sort_order; ?>">Sort by Title: <?php echo $sort_order === 'ASC' ? 'Ascending' : 'Descending'; ?></a></button>
+      </div>
 
       <div class="box-container">
 
          <?php
-         $select_products = mysqli_query($conn, "SELECT * FROM `products`") or die('query failed');
+         $select_products = mysqli_query($conn, "SELECT * FROM `products` ORDER BY name $sort_order") or die('query failed');
          if (mysqli_num_rows($select_products) > 0) {
             while ($fetch_products = mysqli_fetch_assoc($select_products)) {
          ?>

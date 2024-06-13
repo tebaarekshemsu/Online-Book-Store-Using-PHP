@@ -10,6 +10,7 @@
          <a href="admin_orders.php">Orders</a>
          <a href="admin_users.php">Users</a>
          <a href="admin_contacts.php">Messages</a>
+         <a href="admin_upload.php">Upload pdf</a>
       </nav>
 
       <div class="icons">

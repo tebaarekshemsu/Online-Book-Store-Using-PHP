@@ -24,6 +24,7 @@ if (isset($message)) {
             <a href="contact.php">Contact</a>
             <a href="orders.php">Orders</a>
             <a href="review.php">Review</a>
+            <a href="books.php">PDF books</a>
          </nav>
 
          <div class="icons">

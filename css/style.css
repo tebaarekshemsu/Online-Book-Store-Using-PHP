@@ -1380,3 +1380,22 @@ section{
 .headingSearch p a:hover{
    text-decoration: underline;
 }
+
+.sort-container {
+   text-align: center;
+   margin-bottom: 20px;
+}
+
+.sort-btn a {
+   background-color: #007bff;
+   color: white;
+   padding: 10px 20px;
+   border-radius: 5px;
+   text-decoration: none;
+   font-size: 16px;
+   transition: background-color 0.2s;
+}
+
+.sort-btn a:hover {
+   background-color: #0056b3;
+}
