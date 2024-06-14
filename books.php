@@ -101,7 +101,7 @@ $result = $conn->query($sql);
 <body>
     <?php include 'header.php'; ?>
 
-    <div class="content">
+    <div class="content" style="min-height:50vh;">
         <h2 class = "centre">Book List</h2>
         <div class="book-list">
             <?php
