@@ -52,6 +52,45 @@ if (isset($_POST['send'])) {
    <link rel="stylesheet" href="css/style.css">
    <link rel="stylesheet" href="css/styles.css">
    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+   <style>
+   .contact2 form{
+   margin:0 auto;
+   background-color: var(--light-bg);
+  border-radius: 20px;
+   padding:2rem;
+   max-width: 50rem;
+   margin:0 auto;
+   text-align: center;
+}
+
+.contact2 form h3{
+   font-size: 2.5rem;
+   text-transform: uppercase;
+   margin-bottom: 1rem;
+   color:orange;
+}
+
+.contact2 form .box{
+   margin:1rem 0;
+   width: 100%;
+   
+   background-color: var(--white);
+   padding:1.2rem 1.4rem;
+   font-size: 1.8rem;
+   color:var(--black);
+   border-radius: .5rem;
+   box-shadow: 0 0 10px 5px silver;
+}
+
+.contact2 form textarea{
+   height: 20rem;
+   resize: none;
+}
+   
+   
+
+
+   </style>
 
 </head>
 
@@ -64,9 +103,9 @@ if (isset($_POST['send'])) {
       <p><a href="home.php">Home</a> / Contact</p>
    </div>
 
-   <section class="contact">
+   <section class=" contact2">
       <form action="" method="post">
-         <h3>Say Something About Us!</h3>
+         <h3>Write Here!</h3>
          <input type="text" name="name" required placeholder="Enter your name" class="box">
          <input type="email" name="email" required placeholder="Enter your email" class="box">
          <input type="number" name="number" required placeholder="Enter your number" class="box">
