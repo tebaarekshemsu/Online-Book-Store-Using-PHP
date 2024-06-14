@@ -93,14 +93,24 @@ if (isset($_GET['delete'])) {
             <input type="submit" value="Add Product" name="add_product" class="btne">
         </form>
 
-        <h3>Upload Products from CSV</h3>
+        <h1 style="font-size: 2.5rem;
+   text-transform: uppercase;
+   color:#0909FF;
+   margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    text-align: center;">Upload Products from CSV</h1>
         <form action="import_books.php" method="post" enctype="multipart/form-data">
             <input type="file" name="file" accept=".csv" required>
             <input type="submit" name="import" value="Upload CSV" class="btne">
         </form>
 
-        <h3>Download CSV Template</h3>
-        <a href="download_template.php" class="btne">Download CSV Template</a>
+        <h3 style="font-size: 2.5rem;
+   text-transform: uppercase;
+   color:#0909FF;
+   margin-bottom: 1.5rem;
+   margin-top: 1.5rem;
+    text-align: center;">Download CSV Template</h3>
+        <h3 style="text-align: center;"><a href="download_template.php" class="btne" style="text-align: center;">Download CSV Template</a></h3>
     </section>
 
     <section class="show-products">
@@ -109,7 +119,7 @@ if (isset($_GET['delete'])) {
             $select_products = mysqli_query($conn, "SELECT * FROM `products`") or die('query failed');
             if (mysqli_num_rows($select_products) > 0) {
                 while ($fetch_products = mysqli_fetch_assoc($select_products)) {
-            ?>
+                    ?>
                     <div class="box">
                         <img class="image" src="<?php echo $fetch_products['image']; ?>" alt="">
                         <h1 class="name"><strong>Name:</strong> <?php echo $fetch_products['name']; ?></h1>
@@ -119,9 +129,10 @@ if (isset($_GET['delete'])) {
                         <div class="price">$<?php echo $fetch_products['price']; ?>/-</div>
                         <div class="pieces">Available Pieces: <?php echo $fetch_products['pieces']; ?></div>
                         <a href="admin_products.php?update=<?php echo $fetch_products['id']; ?>" class="update-btn">Update</a>
-                        <a href="admin_products.php?delete=<?php echo $fetch_products['id']; ?>" class="delete-btn" onclick="return confirm('Delete this product?');">Delete</a>
+                        <a href="admin_products.php?delete=<?php echo $fetch_products['id']; ?>" class="delete-btn"
+                            onclick="return confirm('Delete this product?');">Delete</a>
                     </div>
-            <?php
+                    <?php
                 }
             } else {
                 echo '<p class="empty">No Products Added Yet!</p>';
@@ -137,20 +148,27 @@ if (isset($_GET['delete'])) {
             $update_query = mysqli_query($conn, "SELECT * FROM `products` WHERE id = '$update_id'") or die('query failed');
             if (mysqli_num_rows($update_query) > 0) {
                 while ($fetch_update = mysqli_fetch_assoc($update_query)) {
-        ?>
+                    ?>
                     <form action="" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="update_p_id" value="<?php echo $fetch_update['id']; ?>">
-                        <input type="text" name="update_name" value="<?php echo $fetch_update['name']; ?>" class="box" required placeholder="Enter product name">
-                        <input type="text" name="update_author" value="<?php echo $fetch_update['author']; ?>" class="box" required placeholder="Enter author name">
-                        <input type="text" name="update_genre" value="<?php echo $fetch_update['genre']; ?>" class="box" required placeholder="Enter genre">
-                        <input type="text" name="update_description" value="<?php echo $fetch_update['description']; ?>" class="box" required placeholder="Enter description">
-                        <input type="number" name="update_price" value="<?php echo $fetch_update['price']; ?>" min="0" class="box" required placeholder="Enter product price">
-                        <input type="number" name="update_pieces" value="<?php echo $fetch_update['pieces']; ?>" min="0" class="box" required placeholder="Enter available pieces">
-                        <input type="text" name="update_image" value="<?php echo $fetch_update['image']; ?>" class="box" required placeholder="Enter image link">
+                        <input type="text" name="update_name" value="<?php echo $fetch_update['name']; ?>" class="box" required
+                            placeholder="Enter product name">
+                        <input type="text" name="update_author" value="<?php echo $fetch_update['author']; ?>" class="box" required
+                            placeholder="Enter author name">
+                        <input type="text" name="update_genre" value="<?php echo $fetch_update['genre']; ?>" class="box" required
+                            placeholder="Enter genre">
+                        <input type="text" name="update_description" value="<?php echo $fetch_update['description']; ?>" class="box"
+                            required placeholder="Enter description">
+                        <input type="number" name="update_price" value="<?php echo $fetch_update['price']; ?>" min="0" class="box"
+                            required placeholder="Enter product price">
+                        <input type="number" name="update_pieces" value="<?php echo $fetch_update['pieces']; ?>" min="0" class="box"
+                            required placeholder="Enter available pieces">
+                        <input type="text" name="update_image" value="<?php echo $fetch_update['image']; ?>" class="box" required
+                            placeholder="Enter image link">
                         <input type="submit" value="Update" name="update_product" class="btne">
                         <input type="reset" value="Cancel" id="close-update" class="close-btn">
                     </form>
-        <?php
+                    <?php
                 }
             }
         } else {

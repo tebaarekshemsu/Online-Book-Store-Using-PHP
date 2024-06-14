@@ -107,7 +107,7 @@ $conn->close();
     <?php include 'admin_header.php'; ?>
 
     <div class="content">
-        <h2>Upload Book</h2>
+        <h2>Upload PDF Book</h2>
         <form action="admin_upload.php" method="post" enctype="multipart/form-data">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>
@@ -118,7 +118,7 @@ $conn->close();
             <label for="pdf">PDF:</label>
             <input type="file" id="pdf" name="pdf" accept="application/pdf" required>
             
-            <input type="submit" value="Upload">
+            <input type="submit" value="Upload" class="btne">
         </form>
         <script src="js/admin_script.js"></script>
 
