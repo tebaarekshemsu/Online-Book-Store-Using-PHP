@@ -116,16 +116,16 @@ if (isset($_POST['order_btn'])) {
    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
    <script>
       // Initialize the map
-      var map = L.map('map').setView([0, 0], 13); // Default to (0, 0) with zoom level 13
+      let map = L.map('map').setView([0, 0], 13); // Default to (0, 0) with zoom level 13
 
-      // Declare marker variable
-      var chosenLocationMarker;
+      // Declare marker letiable
+      let chosenLocationMarker;
 
       // Try to get user's current location
       if (navigator.geolocation) {
          navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
+            let lat = position.coords.latitude;
+            let lng = position.coords.longitude;
             // Set map center to user's current location initially
             map.setView([lat, lng], 13);
             // Add marker at user's current location

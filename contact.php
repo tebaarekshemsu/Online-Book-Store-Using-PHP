@@ -1,6 +1,5 @@
 <?php
-
-include 'config.php';
+include 'config.php'; // Include your database connection file
 
 session_start();
 
@@ -8,22 +7,30 @@ $user_id = $_SESSION['user_id'];
 
 if (!isset($user_id)) {
    header('location:login.php');
+   exit; // Ensure no further execution after redirection
 }
 
 if (isset($_POST['send'])) {
-
    $name = mysqli_real_escape_string($conn, $_POST['name']);
    $email = mysqli_real_escape_string($conn, $_POST['email']);
    $number = $_POST['number'];
    $msg = mysqli_real_escape_string($conn, $_POST['message']);
+   $type_of_message = mysqli_real_escape_string($conn, $_POST['type_of_message']); // New variable for type_of_message
 
-   $select_message = mysqli_query($conn, "SELECT * FROM `message` WHERE name = '$name' AND email = '$email' AND number = '$number' AND message = '$msg'") or die('query failed');
+   // Check if the message with the same details already exists
+   $select_message = mysqli_query($conn, "SELECT * FROM `message` WHERE name = '$name' AND email = '$email' AND number = '$number' AND message = '$msg'") or die('Query failed');
 
    if (mysqli_num_rows($select_message) > 0) {
-      $message[] = 'message sent already!';
+      $message[] = 'Message already sent!';
    } else {
-      mysqli_query($conn, "INSERT INTO `message`(user_id, name, email, number, message) VALUES('$user_id', '$name', '$email', '$number', '$msg')") or die('query failed');
-      $message[] = 'message sent successfully!';
+      // Insert message into the database with user_id and type_of_message
+      $insert_query = "INSERT INTO `message` (user_id, name, email, number, message, type_of_message) VALUES ('$user_id', '$name', '$email', '$number', '$msg', '$type_of_message')";
+      
+      if (mysqli_query($conn, $insert_query)) {
+         $message[] = 'Message sent successfully!';
+      } else {
+         $message[] = 'Error sending message: ' . mysqli_error($conn);
+      }
    }
 }
 
@@ -36,12 +43,12 @@ if (isset($_POST['send'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>contact</title>
+   <title>Contact</title>
 
-   <!-- font awesome cdn link  -->
+   <!-- Font Awesome CDN link -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-   <!-- custom css file link  -->
+   <!-- Custom CSS file links -->
    <link rel="stylesheet" href="css/style.css">
    <link rel="stylesheet" href="css/styles.css">
    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
@@ -54,24 +61,30 @@ if (isset($_POST['send'])) {
 
    <div class="heading-contact">
       <h3>Contact us</h3>
-      <p> <a href="home.php">Home</a> / Contact </p>
+      <p><a href="home.php">Home</a> / Contact</p>
    </div>
 
    <section class="contact">
-
       <form action="" method="post">
          <h3>Say Something About Us!</h3>
          <input type="text" name="name" required placeholder="Enter your name" class="box">
          <input type="email" name="email" required placeholder="Enter your email" class="box">
          <input type="number" name="number" required placeholder="Enter your number" class="box">
+         <select name="type_of_message" class="box" required>
+            <option value="">Select type of message</option>
+            <option value="Feedback">Feedback</option>
+            <option value="Order Problem">Order Problem</option>
+            <option value="Help">Help</option>
+            <!-- Add more options as needed -->
+         </select>
          <textarea name="message" class="box" placeholder="Enter your message" id="" cols="30" rows="10"></textarea>
-         <input type="submit" value="send message" name="send" class="readbtn">
+         <input type="submit" value="Send Message" name="send" class="readbtn">
       </form>
-
    </section>
+
    <?php include 'footer.php'; ?>
 
-   <!-- custom js file link  -->
+   <!-- Custom JS file link -->
    <script src="js/script.js"></script>
 
 </body>

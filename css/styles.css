@@ -1,3 +1,15 @@
+
+
+
+
+
+
+
+
+
+
+
+
 /* Google Fonts - Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
@@ -775,6 +787,13 @@ text-decoration: underline;
   text-align: center;
   margin-bottom: 0;
 }
+
+
+
+  
+
+
+
 .heart-icon{
   position: absolute;
   left: -1.9rem;

@@ -16,25 +16,25 @@ if (!isset($user_id)) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
-   $message = $_POST['message'];
-   $rating = $_POST['rating'];
+    $message = $_POST['message'];
+    $rating = $_POST['rating'];
 
-   // Prepare SQL statement
-   $sql = "INSERT INTO feedbacks (name, message, rating, user_id) VALUES (?, ?, ?, ?)";
+    // Prepare SQL statement
+    $sql = "INSERT INTO feedbacks ( message, rating) VALUES ( ?, ?)";
 
-   // Prepare and bind parameters
-   $stmt = mysqli_prepare($conn, $sql);
-   mysqli_stmt_bind_param($stmt, "ssii", $user_name, $message, $rating, $user_id);
+    // Prepare and bind parameters
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "si",  $message, $rating);
 
-   // Execute the statement
-   if (mysqli_stmt_execute($stmt)) {
-      echo "Feedback submitted successfully.";
-   } else {
-      echo "Error: " . mysqli_error($conn);
-   }
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
+        echo "Feedback submitted successfully.";
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
 
-   // Close statement and connection
-   mysqli_stmt_close($stmt);
+    // Close statement and connection
+    mysqli_stmt_close($stmt);
 }
 
 // Fetch reviews from the database
