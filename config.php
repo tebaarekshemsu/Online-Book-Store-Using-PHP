@@ -148,5 +148,3 @@ $database = "shop_db";
 // Connect to database and create tables
 $conn = connectToDatabase($servername, $username, $password, $database);
 createTables($conn);
-
-?>
