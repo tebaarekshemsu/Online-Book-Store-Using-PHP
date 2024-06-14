@@ -86,6 +86,7 @@ function createTables($conn)
         number VARCHAR(255),
         message TEXT,
         user_id INT,
+        type_of_message VARCHAR(255),
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )";
     if ($conn->query($sql_message) !== TRUE) {
@@ -147,5 +148,3 @@ $database = "shop_db";
 // Connect to database and create tables
 $conn = connectToDatabase($servername, $username, $password, $database);
 createTables($conn);
-
-?>

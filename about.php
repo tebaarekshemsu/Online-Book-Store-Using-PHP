@@ -37,10 +37,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
     mysqli_stmt_close($stmt);
 }
 
+// Fetch reviews from the database
+$reviews_sql = "SELECT message, rating, user_id FROM feedbacks";
+$reviews_result = mysqli_query($conn, $reviews_sql);
+$reviews = mysqli_fetch_all($reviews_result, MYSQLI_ASSOC);
 
-
-
-
+// Fetch user details for each review
+foreach ($reviews as $key => $review) {
+    $user_id = $review['user_id'];
+    $user_sql = "SELECT name, photo FROM users WHERE id = ?";
+    
+    if ($stmt = mysqli_prepare($conn, $user_sql)) {
+        mysqli_stmt_bind_param($stmt, "i", $user_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $name, $photo);
+        mysqli_stmt_fetch($stmt);
+        $reviews[$key]['name'] = $name;
+        $reviews[$key]['photo'] = $photo;
+        mysqli_stmt_close($stmt);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
       <p> <a href="home.php">Home</a> / About </p>
    </div>
 
-   <section class="about">
+Tamrat, [6/14/2024 1:58 AM]
+<section class="about">
       <div class="flex">
          <div class="image">
             <img src="images/aboutbook1.jpg" alt="">
