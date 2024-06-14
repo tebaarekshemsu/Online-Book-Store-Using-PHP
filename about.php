@@ -10,51 +10,37 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['user_name'];
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit_review'])) {
-    $message = trim($_POST['message']);
-    $rating = (int)$_POST['rating'];
+if (!isset($user_id)) {
+   header('location:login.php');
+   exit(); // Stop further execution
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_to_cart'])) {
+    $message = $_POST['message'];
+    $rating = $_POST['rating'];
 
     // Prepare SQL statement
-    $sql = "INSERT INTO feedbacks (message, rating, user_id) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO feedbacks ( message, rating) VALUES ( ?, ?)";
 
-    if ($stmt = mysqli_prepare($conn, $sql)) {
-        // Bind parameters
-        mysqli_stmt_bind_param($stmt, "sii", $message, $rating, $user_id);
+    // Prepare and bind parameters
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "si",  $message, $rating);
 
-        // Execute the statement
-        if (mysqli_stmt_execute($stmt)) {
-            echo "Feedback submitted successfully.";
-        } else {
-            echo "Error: " . mysqli_error($conn);
-        }
-
-        // Close statement
-        mysqli_stmt_close($stmt);
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
+        echo "Feedback submitted successfully.";
     } else {
-        echo "Error preparing statement: " . mysqli_error($conn);
+        echo "Error: " . mysqli_error($conn);
     }
+
+    // Close statement and connection
+    mysqli_stmt_close($stmt);
 }
 
-// Fetch reviews from the database
-$reviews_sql = "SELECT message, rating, user_id FROM feedbacks";
-$reviews_result = mysqli_query($conn, $reviews_sql);
-$reviews = mysqli_fetch_all($reviews_result, MYSQLI_ASSOC);
 
-// Fetch user details for each review
-foreach ($reviews as $key => $review) {
-    $user_id = $review['user_id'];
-    $user_sql = "SELECT name, photo FROM users WHERE id = ?";
-    
-    if ($stmt = mysqli_prepare($conn, $user_sql)) {
-        mysqli_stmt_bind_param($stmt, "i", $user_id);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_bind_result($stmt, $name, $photo);
-        mysqli_stmt_fetch($stmt);
-        $reviews[$key]['name'] = $name;
-        $reviews[$key]['photo'] = $photo;
-        mysqli_stmt_close($stmt);
-    }
-}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -140,7 +126,7 @@ foreach ($reviews as $key => $review) {
    </div>
    
    <?php include 'footer.php'; ?>
-   
+
    <script src="js/script.js"></script>
 </body>
 
