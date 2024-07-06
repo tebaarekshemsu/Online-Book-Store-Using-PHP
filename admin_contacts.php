@@ -29,43 +29,51 @@ if ($filter == 'feedback') {
 } elseif ($filter == 'help') {
    $filter_condition = "WHERE type_of_message = 'Help'";
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Messages</title>
-
+   
    <!-- Font Awesome CDN link -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+   
    <!-- Custom admin CSS file link -->
    <link rel="stylesheet" href="css/admin_style.css">
+   
    <style>
       .filter-buttons {
-         width: 100%;
+         width: 50%;
          display: flex;
          font-size: 2rem;
          justify-content: space-between;
          padding-bottom: 10px;
       }
+      
+      /* Set initial color for filter buttons */
+      .filter-button {
+         color: blue; /* Set your desired default color */
+         text-decoration: none; /* Remove underline if needed */
+      }
+      
+      /* Change color on hover for filter buttons */
+      .filter-button:hover {
+         color: red; /* Set your desired hover color */
+      }
    </style>
-
 </head>
-
 <body>
-
+   
    <?php include 'admin_header.php'; ?>
-
+   
    <section class="messages">
-
+      
       <h1 class="titleshop">Messages</h1>
-
+      
       <!-- Filter buttons -->
       <div class="filter-buttons">
          <a href="admin_contacts.php" class="filter-button">All Messages</a>
@@ -73,8 +81,7 @@ if ($filter == 'feedback') {
          <a href="admin_contacts.php?filter=order_problem" class="filter-button order-problem">Order Problems</a>
          <a href="admin_contacts.php?filter=help" class="filter-button help">Help</a>
       </div>
-
-
+      
       <div class="box-container">
          <?php
          // Select messages based on filter condition
@@ -98,12 +105,11 @@ if ($filter == 'feedback') {
          }
          ?>
       </div>
-
+      
    </section>
-
+   
    <!-- Custom admin JS file link -->
    <script src="js/admin_script.js"></script>
-
+   
 </body>
-
 </html>

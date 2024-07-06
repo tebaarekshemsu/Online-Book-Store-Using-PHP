@@ -55,9 +55,9 @@ section{
 .empty{
    padding:1.5rem;
    text-align: center;
-   border:var(--border);
+   box-shadow: 0 0 10px 5px silver;
    background-color: var(--white);
-   color:#0909FF;
+   color:orange;
    font-size: 2rem;
 }
 
@@ -66,7 +66,7 @@ section{
    top:0;
    margin:0 auto;
    max-width: 1200px;
-   background-color: var(--white);
+   
    padding:2rem;
    display: flex;
    align-items: center;
@@ -157,11 +157,11 @@ section{
    text-transform: capitalize;
  }
  .readbtn:hover{
-   background: #00FF00;
+   background:rgb(246, 195, 101);
    color:  rgb(0,0,0);
  }
  .readbtn{
-   background:#12AD2B;
+   background:rgb(223, 148, 10);
    border:.2rem solid var(50deg, #92adfe, #ff77cd);
  }
 
@@ -211,7 +211,7 @@ section{
 
 .heading h3{
    font-size: 6rem;
-   color:#7FFF00;
+   color:orange;
    text-transform: uppercase;
 }
 
@@ -358,6 +358,42 @@ section{
    text-decoration: underline;
 }
 
+
+.contact2 form{
+    margin:0 auto;
+    background-color: var(--light-bg);
+   border-radius: 20px;
+    padding:2rem;
+    max-width: 50rem;
+    margin:0 auto;
+    text-align: center;
+ }
+ 
+ .contact2 form h3{
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color:orange;
+ }
+ 
+ .contact2 form .box{
+    margin:1rem 0;
+    width: 100%;
+    
+    background-color: var(--white);
+    padding:1.2rem 1.4rem;
+    font-size: 1.8rem;
+    color:var(--black);
+    border-radius: .5rem;
+    box-shadow: 0 0 10px 5px silver;
+ }
+ 
+ .contact2 form textarea{
+    height: 20rem;
+    resize: none;
+ }
+    
+    
  /*---------------------------------------------*/
 
 .header .header-1{
@@ -481,7 +517,7 @@ section{
 
 .home{
    min-height: 100vh;
-   background:linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url(../images/photo_2024-06-15_22-22-30.jpg) no-repeat;
+   background: url(../images/photo_2024-06-15_22-22-30.jpg) no-repeat;
    background-size: cover;
    background-position: center;
    display: flex;
@@ -491,7 +527,7 @@ section{
 
 
 .home .content{
-   text-align: center;
+  
    width: 60rem;
 }
 
@@ -524,9 +560,8 @@ section{
    box-shadow: var(--box-shadow);
    padding:2rem;
    text-align: center;
-  
    position: relative;
-  
+   box-shadow: 0 0 10px 5px silver
 }
 
 .products .box-container .box .image{
@@ -594,10 +629,6 @@ section{
    color:var(--light-color);
 }
 
-.home-contact{
-   background-color: var(--black);
-}
-
 .home-contact .content{
    max-width: 60rem;
    text-align: center;
@@ -607,19 +638,17 @@ section{
 .home-contact .content h3{
    font-size: 3rem;
    text-transform: uppercase;
-   color:var(--white);
+   color:var(--black);
 }
 
 .home-contact .content p{
    padding:1rem 0;
    line-height: 1.5;
-   color:var(--light-white);
+   color:black;
    font-size: 1.7rem;
 }
 
-.reviews{
-   background-color: #FBFBF9;
-}
+
 
 .reviews .box-container{
    max-width: 1200px;
@@ -978,9 +1007,6 @@ section{
 
  
 
-.footer{
-   background-color: rgb(26, 26, 26);
-}
 
 .footer .box-container{
    max-width: 1200px;
@@ -1106,7 +1132,7 @@ section{
 
 .heading-contact h3{
    font-size: 6rem;
-   color:#F433FF;
+   color:orange;
    text-transform: uppercase;
 }
 
@@ -1146,7 +1172,7 @@ section{
 
 .headingorders h3{
    font-size: 6rem;
-   color:#FF5F1F;
+   color:orange;
    text-transform: uppercase;
 }
 
@@ -1278,7 +1304,7 @@ section{
    align-items: center;
    justify-content: center;
    gap:1rem;
-   background:linear-gradient(rgba(4, 9, 30, 0.7),rgba(4, 9, 30, 0.7)), url(../images/shop5.jpg) no-repeat;
+   background:linear-gradient(rgba(4, 9, 30, 0.7),rgba(4, 9, 30, 0.7)), url(../images/photo_2024-06-15_22-22-30.jpg) no-repeat;
    background-size: cover;
    background-position: center;
    text-align: center;
@@ -1286,7 +1312,7 @@ section{
 
 .headingshop h3{
    font-size: 6rem;
-   color:#FFC0CB;
+   color:orange;
    text-transform: uppercase;
 }
 
@@ -1307,7 +1333,7 @@ section{
    text-align: center;
    margin-bottom: 2rem;
    text-transform: uppercase;
-   color:#E30B5D;
+   
    font-size: 4rem;
 }
 
@@ -1342,6 +1368,7 @@ section{
 .headingSearch p a:hover{
    text-decoration: underline;
 }
+
 
 .sort-container {
    text-align: center;

@@ -26,13 +26,17 @@ $result = $conn->query($sql);
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
     <style>
-        body {
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
         }
-        
+
         .content {
+            flex: 1;
             padding-top: 120px; /* Ensure content starts below the header */
             max-width: 800px;
             margin: auto;
@@ -56,9 +60,8 @@ $result = $conn->query($sql);
             transition: transform 0.2s;
         }
 
-        .book-item:hover {
-            transform: translateY(-5px);
-        }
+       
+        
 
         .book-item img {
             width: 100px;
@@ -74,7 +77,7 @@ $result = $conn->query($sql);
         }
 
         .book-item button {
-            background-color: #007bff;
+            background-color: orange;
             border: none;
             color: white;
             padding: 10px 15px;
@@ -89,11 +92,16 @@ $result = $conn->query($sql);
         }
 
         .book-item button:hover {
-            background-color: #0056b3;
+            background-color: orange;
         }
-        .centre{
-            padding-left: 40%;
+
+        .centre {
+            text-align: center;
             padding-bottom: 20px;
+        }
+        .book-list{
+             box-shadow: 0 0 10px 5px silver;
+             border-radius: 2px;
         }
     </style>
 </head>
@@ -102,7 +110,7 @@ $result = $conn->query($sql);
     <?php include 'header.php'; ?>
 
     <div class="content" style="min-height:50vh;">
-        <h2 class = "centre">Book List</h2>
+        <h2 class="centre">Book List</h2>
         <div class="book-list">
             <?php
             if ($result->num_rows > 0) {

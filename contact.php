@@ -49,7 +49,7 @@ if (isset($_POST['send'])) {
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
    <!-- Custom CSS file links -->
-   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/style2.css">
    <link rel="stylesheet" href="css/styles.css">
    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
    <style>
@@ -61,6 +61,7 @@ if (isset($_POST['send'])) {
    max-width: 50rem;
    margin:0 auto;
    text-align: center;
+   box-shadow: 0 0 10px 5px silver
 }
 
 .contact2 form h3{
@@ -98,12 +99,9 @@ if (isset($_POST['send'])) {
 
    <?php include 'header.php'; ?>
 
-   <div class="heading-contact">
-      <h3>Contact us</h3>
-      <p><a href="home.php">Home</a> / Contact</p>
-   </div>
+   
 
-   <section class=" contact2">
+   <section style="margin-top: 150px;" class=" contact2">
       <form action="" method="post">
          <h3>Write Here!</h3>
          <input type="text" name="name" required placeholder="Enter your name" class="box">

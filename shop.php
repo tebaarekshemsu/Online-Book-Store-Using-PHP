@@ -57,7 +57,7 @@ $new_sort_order = $sort_order === 'ASC' ? 'DESC' : 'ASC';
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/style2.css">
    <link rel="stylesheet" href="css/styles.css">
    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
@@ -78,8 +78,8 @@ $new_sort_order = $sort_order === 'ASC' ? 'DESC' : 'ASC';
       <h1 class="titleProducts">Latest Products</h1>
       
       <!-- Sorting button -->
-      <div class="sort-container">
-         <button class="sort-btn"><a href="shop.php?sort=<?php echo $new_sort_order; ?>">Sort by Title: <?php echo $sort_order === 'ASC' ? 'Ascending' : 'Descending'; ?></a></button>
+      <div class="sort-container" style="text-align: left;">
+         <button class="sort-btn "><a  style=" align:left; color:black; background-color:#e3c793; box-shadow: 0 0 10px 5px silver;"  href="shop.php?sort=<?php echo $new_sort_order; ?> ">Sort by Title: <?php echo $sort_order === 'ASC' ? 'Ascending' : 'Descending'; ?></a></button>
       </div>
 
       <div class="box-container">
@@ -98,7 +98,7 @@ $new_sort_order = $sort_order === 'ASC' ? 'DESC' : 'ASC';
                   <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
                   <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">
                   <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
-                  <input type="submit" value="Add to Cart" name="add_to_cart" class="btne">
+                  <input type="submit" value="Add to Cart" name="add_to_cart" class="btne readbtn">
                </form>
          <?php
             }

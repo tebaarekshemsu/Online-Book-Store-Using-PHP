@@ -39,8 +39,8 @@ if (isset($message)) {
          </div>
 
          <div class="user-box">
-            <p>username : <span><?php echo $_SESSION['user_name']; ?></span></p>
-            <p>email : <span><?php echo $_SESSION['user_email']; ?></span></p>
+            <p style="color: #f19256;">username : <span><?php echo $_SESSION['user_name']; ?></span></p>
+            <p style="color: #f19256;">email : <span><?php echo $_SESSION['user_email']; ?></span></p>
             <a href="logout.php" class="delete-btn">logout</a>
          </div>
       </div>
